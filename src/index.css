@@ -1,0 +1,21 @@
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: sans-serif !important;
+  position: relative !important;
+  z-index: 1 !important;
+  background-image: url('./assets/images/background.png') !important;
+  background-repeat: no-repeat !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+@media (min-width: 1921px) {
+  body{
+    background-size: cover !important;
+  }
+}
+@media (max-width: 1025px) {
+  body{
+    font-size:11px !important;
+  }
+}
