@@ -1,10 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
 import styled from 'styled-components';
+import 'semantic-ui-css/semantic.min.css';
 import '../fonts.css';
 
+import Navigation from './Navigation';
 import CommentForm from './CommentForm';
 
 const StyledDiv = styled.div`
@@ -49,31 +50,6 @@ const MenuHeader = styled.h2`
   margin-bottom: 2.0714rem;
   padding-top: 3.4286rem;
 `;
-const List = styled.ul`
-  list-style: none;
-  margin-top: -0.08571rem;
-  margin-bottom: 0;
-`;
-const ListItem = styled.li`
-  width: 33.858rem;
-  margin-left: -8.85711rem;
-  a {
-    display: block;
-    font-size: 0.667em;
-    font-family: 'Open Sans';
-    text-decoration: 'none';
-    color: #1d1f22 !important;
-    padding-top: 0.85712rem;
-    padding-bottom: 1.0714rem;
-    padding-left: 5.9286rem;
-  }
-  a.active {
-    padding-top: 1.4643rem;
-    padding-bottom: 1.4286rem;
-    background-color: #cc9706;
-    margin-bottom: -0.2857rem;
-  }
-`;
 const InfoList = styled.ul`
   padding: 0;
   list-style: none;
@@ -99,69 +75,67 @@ const InfoList = styled.ul`
   }
 `;
 
-function Contact({ match }) {
-  return (
-    <StyledDiv>
-      <Router>
-        <div style={{ display: 'flex', flex: 1 }}>
-          <Container>
-            <Header> Kontakt</Header>
-            <Divider />
-            <MenuBox>
-              <MenuHeader>
-                Odaberite vrstu kontakta koji želite ostvariti:
-              </MenuHeader>
-              <List>
-                <ListItem>
-                  <NavLink to={`${match.url}/komentar`}>Komentar</NavLink>
-                </ListItem>
-                <ListItem>
-                  <NavLink to={`${match.url}/reklamacije`}>Reklamacije</NavLink>
-                </ListItem>
-                <ListItem>
-                  <NavLink to={`${match.url}/prijava-posao`}>
-                    Prijava za posao
-                  </NavLink>
-                </ListItem>
-                <ListItem>
-                  <NavLink to={`${match.url}/prijava-praksa`}>
-                    Prijava za praksu
-                  </NavLink>
-                </ListItem>
-                <ListItem>
-                  <NavLink to={`${match.url}/prijava-sezona`}>
-                    Prijava za sezonski rad
-                  </NavLink>
-                </ListItem>
-                <ListItem>
-                  <NavLink to={`${match.url}/fransize`}>Franšize</NavLink>
-                </ListItem>
-                <ListItem>
-                  <NavLink to={`${match.url}/veleprodaja`}>Veleprodaja</NavLink>
-                </ListItem>
-              </List>
-            </MenuBox>
-            <div>
-              <InfoList>
-                <li>
-                  Adresa: <span>adresa adresa 34, Zagreb</span>
-                </li>
-                <li>
-                  Tel: <span>01/245-34-54</span>
-                </li>
-                <li>
-                  Email: <span>email@email.com</span>
-                </li>
-              </InfoList>
-            </div>
-          </Container>
-          <Container>
-            <Route path={`${match.url}/komentar`} component={CommentForm} />
-          </Container>
-        </div>
-      </Router>
-    </StyledDiv>
-  );
+class Contact extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      navItems: [
+        'Komentar',
+        'Reklamacije',
+        'Prijava za posao',
+        'Prijva za praksu',
+        'Prijava za sezonski rad',
+        'Franšize',
+        'Veleprodaja',
+      ],
+    };
+  }
+  render() {
+    const { match } = this.props;
+    return (
+      <StyledDiv>
+        <Router>
+          <div style={{ display: 'flex', flex: 1 }}>
+            <Container>
+              <Header> Kontakt</Header>
+              <Divider />
+              <MenuBox>
+                <MenuHeader>
+                  Odaberite vrstu kontakta koji želite ostvariti:
+                </MenuHeader>
+                <Navigation
+                  items={this.state.navItems}
+                  sub={true}
+                  matching={match.url}
+                  listClass={'menu-list'}
+                  itemClass={'menu-item'}
+                />
+              </MenuBox>
+              <div>
+                <InfoList>
+                  <li>
+                    Adresa: <span>adresa adresa 34, Zagreb</span>
+                  </li>
+                  <li>
+                    Tel: <span>01/245-34-54</span>
+                  </li>
+                  <li>
+                    Email: <span>email@email.com</span>
+                  </li>
+                </InfoList>
+              </div>
+            </Container>
+            <Container>
+              <Route
+                path={`${match.url}/komentar`}
+                component={CommentForm}
+              />
+            </Container>
+          </div>
+        </Router>
+      </StyledDiv>
+    );
+  }
 }
 
 export default Contact;
